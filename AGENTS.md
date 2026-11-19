@@ -15,7 +15,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Display live date/time in Spanish using `America/Bogota`, not the visitor's time zone. Avoid hydration mismatches and clean up timers.
 - Preserve readable text and intentional image cropping on narrow, tall and landscape screens. Honor safe areas.
 - Run `npm run lint` and `npm run build` before a PR. Document any unverified checks honestly.
-- Releases must refer to the exact successful production deployment SHA on main, never merely a push. Do not expose tokens, execute AI output, or publish invented fallback AI notes.
+- Generate release notes for the exact SHA pushed to main after merging a PR, independently of Vercel deployment status. Do not expose tokens, execute AI output, or publish invented fallback AI notes.
 - See `SKILLS.md` for recurring procedures and README for service setup.
 
 ## Language policy
