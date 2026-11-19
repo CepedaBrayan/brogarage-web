@@ -5,7 +5,26 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://brogarage.com.co"),
   title: "Bro Garage | Muy pronto",
   description: "¡Muy pronto Bro Garage será web!",
-  openGraph: { title: "Bro Garage | Muy pronto", description: "¡Muy pronto Bro Garage será web!", locale: "es_CO", type: "website", images: [{ url: "/bro-garage.jpg", width: 1536, height: 1024 }] },
+  openGraph: {
+    title: "Bro Garage | Muy pronto",
+    description: "¡Muy pronto Bro Garage será web!",
+    url: "https://brogarage.com.co",
+    locale: "es_CO",
+    type: "website",
+    images: [{
+      url: "/bro-garage-share.jpg",
+      width: 1231,
+      height: 1277,
+      type: "image/jpeg",
+      alt: "Piloto sobre una Aprilia RSV4 en circuito",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bro Garage | Muy pronto",
+    description: "¡Muy pronto Bro Garage será web!",
+    images: [{ url: "/bro-garage-share.jpg", alt: "Piloto sobre una Aprilia RSV4 en circuito" }],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
