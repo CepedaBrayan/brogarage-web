@@ -1,0 +1,31 @@
+name: Release deployed production
+on:
+  deployment_status:
+permissions:
+  contents: read
+concurrency:
+  group: production-release
+  cancel-in-progress: false
+jobs:
+  release:
+    if: >-
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment.ref == 'main' &&
+      startsWith(github.event.deployment.environment, 'Production')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      models: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.deployment.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Generate AI notes and publish release
+        run: node scripts/release.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ github.event.deployment.sha }}
+          DEPLOYMENT_URL: ${{ github.event.deployment_status.environment_url }}
+          RELEASE_MODEL: ${{ vars.RELEASE_MODEL || 'openai/gpt-4o-mini' }}
