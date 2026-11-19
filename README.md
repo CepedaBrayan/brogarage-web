@@ -33,6 +33,10 @@ Open feature pull requests into `dev`, then open a pull request from `dev` into 
 
 Add `brogarage.com.co` and `www.brogarage.com.co` in Vercel, then copy the requested DNS records into Spaceship. Preserve Zoho's MX and TXT records. Vercel manages HTTPS after DNS verification.
 
+## Web Analytics
+
+Vercel Web Analytics is integrated through `@vercel/analytics/next` in `src/app/layout.tsx`. It tracks visitors and page views across the site after deployment. Enable Web Analytics for the project in the Vercel dashboard, deploy the changes, and visit the site to generate the first page view. No API key or environment variable is required for this integration.
+
 ## Automated release notes
 
 The release workflow runs on **pushes to `main`**, including merged pull requests. It publishes one release per main SHA, independently of Vercel. A missing, pending, failed, or successful deployment does not affect release generation. A release records changes in main and does not confirm a production deployment.
