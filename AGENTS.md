@@ -17,3 +17,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Run `npm run lint` and `npm run build` before a PR. Document any unverified checks honestly.
 - Releases must refer to the exact successful production deployment SHA on main, never merely a push. Do not expose tokens, execute AI output, or publish invented fallback AI notes.
 - See `SKILLS.md` for recurring procedures and README for service setup.
+
+## Language policy
+- Write all code comments, documentation, commit messages, PR titles and descriptions, issue labels, workflow labels, and release notes in English.
+- Keep public-facing landing copy and the Colombia clock localized in Spanish unless the user requests a product language change.

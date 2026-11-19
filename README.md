@@ -1,43 +1,47 @@
 # Bro Garage Web
 
-Landing de lanzamiento de **brogarage.com.co**, construida con Next.js App Router, React y TypeScript.
+Coming-soon landing page for **brogarage.com.co**, built with Next.js App Router, React, and TypeScript.
 
-Una fotografía local ocupa toda la pantalla. El mensaje «Muy pronto Bro Garage será web!» y un reloj en vivo con fecha, hora, minutos y segundos de Colombia (America/Bogota) completan la página. El encuadre y la posición del texto se adaptan a móviles y escritorio. No incluye backend ni base de datos.
+A local photograph fills the viewport. A Spanish launch announcement and a live clock display the current date, hours, minutes, and seconds in Colombia (America/Bogota). Image cropping and text placement adapt to mobile and desktop screens. This version has no backend or database.
 
-## Desarrollo
+## Development
 
-Node.js 22 y npm.
+Requirements: Node.js 22 and npm.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Abrir http://localhost:3000. Validar con `npm run lint` y `npm run build`.
+Open http://localhost:3000. Validate changes with `npm run lint` and `npm run build`.
 
-## Estructura
+## Project structure
 
-- `src/app/page.tsx`: landing y fotografía con Next Image.
-- `src/app/globals.css`: encuadres, contraste y diseño responsive.
-- `src/components/colombia-clock.tsx`: reloj cliente con actualización cada segundo.
-- `public/bro-garage.jpg`: fotografía proporcionada por el propietario.
-- `AGENTS.md` y `SKILLS.md`: instrucciones y procedimientos de mantenimiento.
+- `src/app/page.tsx`: landing page and Next Image background.
+- `src/app/globals.css`: image cropping, contrast, and responsive layout.
+- `src/components/colombia-clock.tsx`: client-side clock updated every second.
+- `public/bro-garage.jpg`: photograph supplied by the owner.
+- `AGENTS.md` and `SKILLS.md`: contributor instructions and maintenance procedures.
 
-## GitHub y Vercel
+## Language policy
 
-Trabajar en `dev` y abrir PR a `main`. Importar el repositorio en Vercel, elegir Next.js y mantener `main` como Production Branch. La integración Git genera previews y despliega producción automáticamente. En GitHub, configurar CI / quality como check requerido si se desea impedir merges con fallos; el workflow por sí solo no cambia la protección de ramas.
+Write all code comments, documentation, commit messages, PR titles and descriptions, issue labels, workflow labels, and release notes in English. Public-facing landing copy and the Colombia clock remain localized in Spanish.
 
-Agregar `brogarage.com.co` y `www.brogarage.com.co` en Vercel y copiar los registros que indique a Spaceship. Conservar los MX y TXT de Zoho. Vercel administra HTTPS al verificar el DNS.
+## GitHub and Vercel
 
-## Releases con notas de IA
+Work on `dev` and open pull requests into `main`. Import the repository into Vercel, select Next.js, and keep `main` as the Production Branch. The Git integration creates previews and deploys production automatically. Configure CI / quality as a required GitHub check to prevent merging failed checks; the workflow alone does not change branch protection.
 
-El workflow de release escucha **deployment_status success**, solamente para `main` y entornos cuyo nombre comience por `Production`. Publica una release por SHA desplegado, después del despliegue exitoso, con resumen en español basado en commits y diff desde la release anterior que sea ancestro. Usa GitHub Models con el token temporal del workflow (`models: read`); no necesita una clave externa. Las notas identifican el modelo y enlazan código y despliegue. Los límites de entrada se aplican antes de enviar el diff.
+Add `brogarage.com.co` and `www.brogarage.com.co` in Vercel, then copy the requested DNS records into Spaceship. Preserve Zoho's MX and TXT records. Vercel manages HTTPS after DNS verification.
 
-Configuración externa necesaria:
+## AI-generated release notes
 
-1. Conectar Vercel al repositorio y dejar habilitados los eventos GitHub `deployment_status`. Confirmar que reporta ref `main` y entorno `Production` (o ajustar el filtro a los valores reales).
-2. Habilitar GitHub Models para el repositorio/cuenta y permitir su uso por Actions según las políticas aplicables. El diff se envía a este servicio para redactar notas.
-3. Opcional: definir la variable de repositorio `RELEASE_MODEL` (por defecto `openai/gpt-4o-mini`). El modelo debe estar disponible para esa cuenta.
-4. Tras el primer deployment exitoso en main, comprobar Actions y Releases. Si falla el acceso a Models, corregirlo y reejecutar el job. No publica notas de respaldo haciéndolas pasar por IA.
+The release workflow listens for successful **deployment_status** events for `main` and environment names starting with `Production`. After a successful deployment, it publishes one release per deployed SHA, with an English summary based on commits and the diff since the previous ancestor release. It uses GitHub Models with the temporary workflow token (`models: read`), without an external API key. Notes identify the model and link to the code and deployment. Input limits are applied before sending the diff.
 
-Los tags `deploy-<SHA completo>` evitan duplicados al repetir un deployment. Un rollback de un SHA ya publicado no crea una segunda release. Los eventos de preview o fallidos no publican releases. Esta automatización no conecta ni configura la cuenta de Vercel por sí sola.
+Required external configuration:
+
+1. Connect Vercel to this repository and keep GitHub `deployment_status` events enabled. Confirm that events report ref `main` and environment `Production`, or adjust the workflow filter to the actual values.
+2. Enable GitHub Models for the repository/account and allow Actions to use it under the applicable policies. Commit and diff content is sent to this service to generate notes.
+3. Optionally set the repository variable `RELEASE_MODEL` (default: `openai/gpt-4o-mini`). The selected model must be available to the account.
+4. After the first successful production deployment on main, inspect Actions and Releases. If Models access fails, correct it and rerun the job. The workflow never presents fallback text as AI-generated notes.
+
+Tags use `deploy-<full SHA>` to prevent duplicate releases for repeated deployments. Rolling back to an already released SHA does not create another release. Preview and failed deployment events do not publish releases. This automation does not connect or configure the Vercel account itself.
