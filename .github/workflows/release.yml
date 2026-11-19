@@ -12,16 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      models: read
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
           fetch-depth: 0
           persist-credentials: false
-      - name: Generate AI notes and publish release
+      - name: Generate GitHub notes and publish release
         run: node scripts/release.mjs
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_SHA: ${{ github.sha }}
-          RELEASE_MODEL: ${{ vars.RELEASE_MODEL || 'openai/gpt-4o-mini' }}

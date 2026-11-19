@@ -33,16 +33,12 @@ Open feature pull requests into `dev`, then open a pull request from `dev` into 
 
 Add `brogarage.com.co` and `www.brogarage.com.co` in Vercel, then copy the requested DNS records into Spaceship. Preserve Zoho's MX and TXT records. Vercel manages HTTPS after DNS verification.
 
-## AI-generated release notes
+## Automated release notes
 
-The release workflow runs on **pushes to `main`**, including merged pull requests. It publishes one release per main SHA, with an English summary based on commits and the diff since the previous ancestor release. It runs independently of Vercel: a missing, pending, failed, or successful deployment does not affect release generation. A release records changes in main and does not confirm a production deployment.
+The release workflow runs on **pushes to `main`**, including merged pull requests. It publishes one release per main SHA, independently of Vercel. A missing, pending, failed, or successful deployment does not affect release generation. A release records changes in main and does not confirm a production deployment.
 
-It uses GitHub Models with the temporary workflow token (`models: read`), without an external API key. Notes identify the model and link to the code. Input limits are applied before sending the diff.
+Notes use GitHub's native `releases/generate-notes` API to list merged pull requests and contributors since the previous ancestor release. These are automatic GitHub notes, not AI summaries. No AI service, model configuration, or external API key is required; the workflow uses its temporary `GITHUB_TOKEN` with `contents: write`. GitHub Models was retired on July 30, 2026 and is no longer used.
 
-Required external configuration:
+Tags use `release-<full SHA>` to prevent duplicate releases when rerunning a job. Previous `deploy-<full SHA>` releases remain valid comparison baselines. Pushes to dev and unmerged pull requests do not publish releases. After merging a PR into main, inspect Actions and Releases. If GitHub returns an error or invalid JSON, the job fails with the endpoint and status so it can be diagnosed and rerun.
 
-1. Enable GitHub Models for the repository/account and allow Actions to use it under the applicable policies. Commit and diff content is sent to this service to generate notes.
-2. Optionally set the repository variable `RELEASE_MODEL` (default: `openai/gpt-4o-mini`). The selected model must be available to the account.
-3. After merging a PR into main, inspect Actions and Releases. If Models access fails, correct it and rerun the job. The workflow never presents fallback text as AI-generated notes.
-
-Tags use `release-<full SHA>` to prevent duplicate releases when rerunning a job. Previous `deploy-<full SHA>` releases remain valid comparison baselines. Pushes to dev and unmerged pull requests do not publish releases. This automation does not connect or configure the Vercel account itself.
+Keep PR titles and descriptions in English because GitHub uses them in the release notes. This automation does not connect or configure the Vercel account itself.
